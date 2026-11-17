@@ -3,16 +3,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- 👇 核心魔法在这里：微信卡片的内容全靠这三行 -->
-    <meta property="og:title" content="陈振华 & 钱玎玎的婚宴邀请函">
-    <meta property="og:description" content="诚挚邀请您参加我们的婚宴，共享美好时刻！">
-    <meta property="og:image" content="https://clrvn.github.io/wedding/2.jpg"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <!-- 微信补充标签，提高缩略图命中率 -->
-  <meta name="wx:webpage" content="true" />
-  <meta property="wx:thumbnail" content="https://clrvn.github.io/wedding/2.jpg" />
-  <title> 陈振华 & 钱玎玎</title>
+  <!-- 微信卡片 meta（app.js 会用 wedding.json 中的 share 配置覆盖） -->
+  <meta property="og:title" content="陈振华 & 钱玎玎的婚宴邀请函">
+  <meta property="og:description" content="诚挚邀请您参加我们的婚宴，共享美好时刻！">
+  <meta property="og:image" content="https://github.com/Clrvn/wedding/2.jpg">
+  <meta property="og:type" content="website">
+  <title>陈振华 & 钱玎玎</title>
+
   <style>
     :root {
       --red: #8e1f2f;
@@ -24,760 +23,171 @@
       --bg: #faf8f5;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
-    /* 全局重置与背景 */
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
       background-color: #f5f5f5;
-      /* 柔和的浅灰背景 */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
       color: #333;
     }
 
-    /* 手机卡片容器 */
-    .wedding-card {
-      background: #fff;
-      width: 100%;
-      max-width: 480px;
-      /* 限制最大宽度，模拟手机 */
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
+    .wrap { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; box-shadow: 0 8px 40px rgba(0, 0, 0, .1); position: relative; }
 
-    /* 顶部照片区 */
-    .photo-section {
-      width: 100%;
-      height: 320px;
-      /* 控制照片高度 */
-      background-image: url('./img/8.jpg');
-      /* 替换为你的婚纱照路径 */
-      background-size: cover;
-      background-position: center bottom;
-      position: relative;
-    }
-
-    /* 照片右上角的绿色导航按钮 */
-    .nav-btn {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      background-color: #38B000;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s;
-    }
-
-    .nav-btn:active {
-      transform: scale(0.95);
-    }
-
-    /* 内容区 */
-    .content-section {
-      padding: 30px 30px 20px;
-    }
-
-    /* 日期区域 */
-    .date-main {
-      color: #A95656;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 8px;
-      letter-spacing: 1px;
-    }
-
-    .date-sub {
-      color: #888;
-      font-size: 14px;
-      margin-bottom: 40px;
-    }
-
-    /* 地点区域（优化原链接样式） */
-    .venue-box {
-      margin: 0 auto 30px;
-      max-width: 320px;
-    }
-
-    .venue-box a {
-      /* 彻底去掉链接的蓝色和下划线 */
-      text-decoration: none;
-      color: hsl(133, 37%, 48%);
-      font-size: 22px;
-      font-weight: bold;
-      line-height: 1.4;
-      display: block;
-      border-bottom: 1px dashed #e0e0e0;
-      padding-bottom: 20px;
-      transition: color 0.3s;
-    }
-
-    .venue-box a:active {
-      color: #A95656;
-    }
-
-    /* 新人名字 */
-    .couple-name {
-      color: #555;
-      font-size: 14px;
-      letter-spacing: 2px;
-    }
-
-    .couple-name .and {
-      color: #A95656;
-      margin: 0 5px;
-      font-style: italic;
-    }
-
-    .wrap {
-      width: 100%;
-      max-width: 420px;
-      background: #fff;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, .1);
-      position: relative;
-    }
-
-    /* ===== 音乐 ===== */
     .music {
-      position: fixed;
-      top: 66px;
-      right: 12px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--pink);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      cursor: pointer;
-      z-index: 99;
-      box-shadow: 0 4px 14px rgba(242, 160, 181, .5);
+      position: fixed; top: 66px; right: 12px; width: 44px; height: 44px; border-radius: 50%;
+      background: var(--pink); color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; cursor: pointer; z-index: 99; box-shadow: 0 4px 14px rgba(242, 160, 181, .5);
       animation: spin 8s linear infinite;
     }
+    .music.off { animation: none; opacity: .55; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .music.off {
-      animation: none;
-      opacity: .55;
-    }
+    section { padding: 40px 26px; }
+    .en { font-family: "Times New Roman", serif; font-style: italic; letter-spacing: 2px; }
+    .script { font-family: "Brush Script MT", "Segoe Script", cursive; color: var(--pink); }
+    .center { text-align: center; }
+    .divider { width: 34px; height: 1px; background: var(--red); margin: 18px auto; }
+    .reveal { opacity: 0; transform: translateY(26px); transition: .8s cubic-bezier(.3, 0, .2, 1); }
+    .reveal.in { opacity: 1; transform: none; }
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* ===== 通用 ===== */
-    section {
-      padding: 40px 26px;
-    }
-
-    .en {
-      font-family: "Times New Roman", serif;
-      font-style: italic;
-      letter-spacing: 2px;
-    }
-
-    .script {
-      font-family: "Brush Script MT", "Segoe Script", cursive;
-      color: var(--pink);
-    }
-
-    .center {
-      text-align: center;
-    }
-
-    .divider {
-      width: 34px;
-      height: 1px;
-      background: var(--red);
-      margin: 18px auto;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(26px);
-      transition: .8s cubic-bezier(.3, 0, .2, 1);
-    }
-
-    .reveal.in {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ===== 封面 ===== */
     .cover {
-      height: 100vh;
-      min-height: 640px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: #fff;
-      padding: 26px;
-      position: relative;
-      overflow: hidden;
+      height: 100vh; min-height: 640px; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; background: #fff; padding: 26px;
+      position: relative; overflow: hidden;
     }
+    .cover .tag { font-size: 13px; letter-spacing: 4px; color: var(--gray); }
+    .cover h1 { font-size: 32px; color: var(--red); letter-spacing: 4px; margin: 12px 0 6px; font-weight: 700; }
+    .cover .sub { color: var(--gray); letter-spacing: 2px; font-size: 14px; }
+    .cover .date { margin-top: 10px; font-size: 13px; color: var(--gray); letter-spacing: 3px; }
+    .cover .hint { position: absolute; bottom: 34px; font-size: 12px; color: #bbb; letter-spacing: 2px; animation: bob 2s infinite; }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+    .cover .bgimg { position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%; opacity: .12; object-position: 35% center; }
 
-    .cover .tag {
-      font-size: 13px;
-      letter-spacing: 4px;
-      color: var(--gray);
-    }
-
-    .cover h1 {
-      font-size: 32px;
-      color: var(--red);
-      letter-spacing: 4px;
-      margin: 12px 0 6px;
-      font-weight: 700;
-    }
-
-    .cover .sub {
-      color: var(--gray);
-      letter-spacing: 2px;
-      font-size: 14px;
-    }
-
-    .cover .names {
-      margin-top: 26px;
-      font-size: 15px;
-      color: var(--red);
-      letter-spacing: 2px;
-    }
-
-    .cover .date {
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--gray);
-      letter-spacing: 3px;
-    }
-
-    .cover .hint {
-      position: absolute;
-      bottom: 34px;
-      font-size: 12px;
-      color: #bbb;
-      letter-spacing: 2px;
-      animation: bob 2s infinite;
-    }
-
-    @keyframes bob {
-
-      0%,
-      100% {
-        transform: translateY(0)
-      }
-
-      50% {
-        transform: translateY(8px)
-      }
-    }
-
-    .cover .bgimg {
-      position: absolute;
-      inset: 0;
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-      opacity: .12;
-      object-position: 35% center;
-    }
-
-    /* ===== 黑胶 ===== */
-    .vinyl-wrap {
-      position: relative;
-      width: 230px;
-      margin: 26px auto;
-    }
-
+    .vinyl-wrap { position: relative; width: 230px; margin: 26px auto; }
     .vinyl {
-      width: 230px;
-      height: 230px;
-      border-radius: 50%;
+      width: 230px; height: 230px; border-radius: 50%;
       background: radial-gradient(circle, #333 0 28%, #111 28% 100%);
-      border: 8px solid #222;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border: 8px solid #222; display: flex; align-items: center; justify-content: center;
       animation: spin 12s linear infinite;
     }
+    .vinyl img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; }
+    .vinyl::after { content: ""; position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; }
+    .hand { position: absolute; right: -6px; top: 20px; width: 60px; height: 60px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, .2); }
 
-    .vinyl img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+    .player { margin: 22px 16px; padding: 18px; background: #f6f4f1; border-radius: 14px; }
+    .player .t { display: flex; justify-content: space-between; align-items: center; }
+    .player .name { font-size: 15px; font-weight: 700; }
+    .player .st { font-size: 12px; color: #999; margin-top: 6px; }
+    .bar { height: 3px; background: #e0dcd6; border-radius: 3px; margin: 14px 0 8px; position: relative; }
+    .bar i { position: absolute; left: 0; top: 0; height: 3px; width: 30%; background: var(--red); border-radius: 3px; animation: prog 8s linear infinite; }
+    @keyframes prog { from { width: 0; } to { width: 100%; } }
+    .player img { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; }
 
-    .vinyl::after {
-      content: "";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #fff;
-    }
+    .poem { line-height: 2.2; font-size: 15px; color: #444; text-align: center; }
+    .poem.right { text-align: right; }
+    .big-script { font-size: 34px; margin: 10px 0 26px; }
 
-    .hand {
-      position: absolute;
-      right: -6px;
-      top: 20px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
-    }
+    .photo { margin: 16px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 6px 20px rgba(0, 0, 0, .1); }
+    .photo img { width: 100%; display: block; object-fit: cover; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+    .grid2 img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; }
 
-    .player {
-      margin: 22px 16px;
-      padding: 18px;
-      background: #f6f4f1;
-      border-radius: 14px;
-    }
+    .count { display: flex; justify-content: center; gap: 10px; margin-top: 26px; }
+    .count .c { width: 64px; padding: 12px 0; background: var(--red); color: #fff; border-radius: 8px; text-align: center; }
+    .count .c b { font-size: 22px; display: block; }
+    .count .c span { font-size: 10px; letter-spacing: 1px; opacity: .85; }
 
-    .player .t {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .cal { text-align: center; margin-top: 10px; }
+    .cal .d { color: var(--red); letter-spacing: 2px; }
+    .cal .d b { font-size: 36px; }
+    .cal table { width: 100%; margin-top: 18px; border-collapse: collapse; font-size: 14px; color: #555; }
+    .cal th { color: var(--red); font-size: 11px; padding: 8px 0; border-bottom: 1px solid var(--line); letter-spacing: 1px; }
+    .cal td { padding: 10px 0; position: relative; }
+    .cal td.dim { color: #ccc; }
+    .cal td.mark { color: var(--red); font-weight: 700; }
+    .cal td.mark span { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1.5px solid var(--red); border-radius: 50%; background: #fdf3f4; }
+    .cal td.mark::after { content: "囍"; position: absolute; left: 50%; bottom: -2px; transform: translateX(-50%); font-size: 9px; color: var(--red); }
 
-    .player .name {
-      font-size: 15px;
-      font-weight: 700;
-    }
+    .addr { line-height: 2.1; font-size: 14px; color: #555; text-align: center; }
+    .addr b { color: var(--red); }
 
-    .player .st {
-      font-size: 12px;
-      color: #999;
-      margin-top: 6px;
-    }
+    .tips { margin-top: 22px; }
+    .tips li { list-style: none; position: relative; padding-left: 20px; margin-bottom: 16px; font-size: 14px; line-height: 1.9; color: #555; }
+    .tips li::before { content: ""; position: absolute; left: 0; top: 9px; width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
 
-    .bar {
-      height: 3px;
-      background: #e0dcd6;
-      border-radius: 3px;
-      margin: 14px 0 8px;
-      position: relative;
-    }
+    .call { display: flex; gap: 12px; margin-top: 26px; }
+    .call a { flex: 1; text-align: center; padding: 12px; border: 1px solid var(--ink); border-radius: 30px; font-size: 14px; color: var(--ink); text-decoration: none; }
 
-    .bar i {
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 3px;
-      width: 30%;
-      background: var(--red);
-      border-radius: 3px;
-      animation: prog 8s linear infinite;
-    }
-
-    @keyframes prog {
-      from {
-        width: 0
-      }
-
-      to {
-        width: 100%
-      }
-    }
-
-    .player img {
-      width: 52px;
-      height: 52px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    /* ===== 文案 ===== */
-    .poem {
-      line-height: 2.2;
-      font-size: 15px;
-      color: #444;
-      text-align: center;
-    }
-
-    .poem.right {
-      text-align: right;
-    }
-
-    .big-script {
-      font-size: 34px;
-      margin: 10px 0 26px;
-    }
-
-    /* ===== 照片 ===== */
-    .photo {
-      margin: 16px 0;
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, .1);
-    }
-
-    .photo img {
-      width: 100%;
-      display: block;
-      object-fit: cover;
-    }
-
-    .grid2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin: 16px 0;
-    }
-
-    .grid2 img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-
-    .grid2 .cap {
-      font-size: 12px;
-      color: #999;
-      margin-top: 8px;
-      line-height: 1.8;
-    }
-
-    /* ===== 倒计时 ===== */
-    .count {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 26px;
-    }
-
-    .count .c {
-      width: 64px;
-      padding: 12px 0;
-      background: var(--red);
-      color: #fff;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .count .c b {
-      font-size: 22px;
-      display: block;
-    }
-
-    .count .c span {
-      font-size: 10px;
-      letter-spacing: 1px;
-      opacity: .85;
-    }
-
-    /* ===== 日历 ===== */
-    .cal {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .cal .d {
-      color: var(--red);
-      letter-spacing: 2px;
-    }
-
-    .cal .d b {
-      font-size: 36px;
-    }
-
-    .cal table {
-      width: 100%;
-      margin-top: 18px;
-      border-collapse: collapse;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .cal th {
-      color: var(--red);
-      font-size: 11px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--line);
-      letter-spacing: 1px;
-    }
-
-    .cal td {
-      padding: 10px 0;
-      position: relative;
-    }
-
-    .cal td.dim {
-      color: #ccc;
-    }
-
-    .cal td.mark {
-      color: var(--red);
-      font-weight: 700;
-    }
-
-    .cal td.mark span {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      height: 30px;
-      border: 1.5px solid var(--red);
-      border-radius: 50%;
-      background: #fdf3f4;
-    }
-
-    .cal td.mark::after {
-      content: "囍";
-      position: absolute;
-      left: 50%;
-      bottom: -2px;
-      transform: translateX(-50%);
-      font-size: 9px;
-      color: var(--red);
-    }
-
-    /* ===== 地图 ===== */
-    .map {
-      position: relative;
-      margin: 22px 0;
-      border-radius: 6px;
-      overflow: hidden;
-      height: 200px;
-      background: linear-gradient(135deg, #cfe3f7 0%, #e8f0f9 60%, #f7f3e8 100%);
-    }
-
-    .map img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .map .pin {
-      position: absolute;
-      left: 50%;
-      top: 44%;
-      transform: translateX(-50%);
-      width: 26px;
-      height: 26px;
-      border-radius: 50% 50% 50% 0;
-      background: var(--red);
-      transform-origin: bottom;
-    }
-
-    .map .pin::after {
-      content: "";
-      position: absolute;
-      left: 7px;
-      top: 7px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #fff;
-    }
-
-    .map .nav {
-      position: absolute;
-      right: 12px;
-      bottom: 12px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #25b46f;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    .addr {
-      line-height: 2.1;
-      font-size: 14px;
-      color: #555;
-      text-align: center;
-    }
-
-    .addr b {
-      color: var(--red);
-    }
-
-    /* ===== 悄悄话 ===== */
-    .tips {
-      margin-top: 22px;
-    }
-
-    .tips li {
-      list-style: none;
-      position: relative;
-      padding-left: 20px;
-      margin-bottom: 16px;
-      font-size: 14px;
-      line-height: 1.9;
-      color: #555;
-    }
-
-    .tips li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 9px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--red);
-    }
-
-    .call {
-      display: flex;
-      gap: 12px;
-      margin-top: 26px;
-    }
-
-    .call a {
-      flex: 1;
-      text-align: center;
-      padding: 12px;
-      border: 1px solid var(--ink);
-      border-radius: 30px;
-      font-size: 14px;
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    /* ===== 表单 ===== */
-    .form {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 22px;
-      margin-top: 22px;
-    }
-
-    .form input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #dcd6d0;
-      border-radius: 6px;
-      font-size: 14px;
-      margin-bottom: 14px;
-      outline: none;
-    }
-
-    .form input:focus {
-      border-color: var(--red);
-    }
-
+    .form { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px; margin-top: 22px; }
+    .form input { width: 100%; padding: 13px; border: 1px solid #dcd6d0; border-radius: 6px; font-size: 14px; margin-bottom: 14px; outline: none; }
+    .form input:focus { border-color: var(--red); }
     .form select {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #dcd6d0;
-      border-radius: 6px;
-      font-size: 14px;
-      margin-bottom: 14px;
-      outline: none;
-      background: #fff;
-      color: var(--ink);
-      -webkit-appearance: none;
-      appearance: none;
+      width: 100%; padding: 13px; border: 1px solid #dcd6d0; border-radius: 6px; font-size: 14px;
+      margin-bottom: 14px; outline: none; background: #fff; color: var(--ink);
+      -webkit-appearance: none; appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238e1f2f' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
     }
+    .form select:invalid { color: #999; }
+    .form .btn { width: 100%; padding: 14px; border: none; border-radius: 6px; background: var(--red); color: #fff; font-size: 16px; letter-spacing: 3px; cursor: pointer; }
+    .ok { display: none; text-align: center; color: #2e9e5b; font-size: 13px; margin-top: 12px; }
 
-    .form select:focus {
-      border-color: var(--red);
+    .wedding-card { background: #fff; width: 100%; text-align: center; border-top: 1px solid var(--line); }
+    .photo-section { width: 100%; height: 320px; background-size: cover; background-position: center bottom; position: relative; }
+    .nav-btn {
+      position: absolute; bottom: 20px; right: 20px; background-color: #38B000; color: white;
+      padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; text-decoration: none;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-
-    .form select:invalid {
-      color: #999;
+    .content-section { padding: 30px 30px 20px; }
+    .date-main { color: #A95656; font-size: 18px; font-weight: bold; margin-bottom: 8px; letter-spacing: 1px; }
+    .date-sub { color: #888; font-size: 14px; margin-bottom: 40px; }
+    .venue-box { margin: 0 auto 30px; max-width: 320px; }
+    .venue-box a {
+      text-decoration: none; color: hsl(133, 37%, 48%); font-size: 22px; font-weight: bold; line-height: 1.4;
+      display: block; border-bottom: 1px dashed #e0e0e0; padding-bottom: 20px;
     }
-
-    .form .btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 6px;
-      background: var(--red);
-      color: #fff;
-      font-size: 16px;
-      letter-spacing: 3px;
-    }
-
-    .ok {
-      display: none;
-      text-align: center;
-      color: #2e9e5b;
-      font-size: 13px;
-      margin-top: 12px;
-    }
-
-    .foot {
-      text-align: center;
-      padding: 28px 20px 34px;
-      color: #bbb;
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
+    .venue-box a:active { color: #A95656; }
+    .foot { text-align: center; padding: 28px 20px 34px; color: #bbb; font-size: 12px; letter-spacing: 2px; }
   </style>
 </head>
 
 <body>
-
-  <div class="music" id="musicBtn">♪</div>
-  <audio id="bgm" loop preload="auto" src="./music.mp3"></audio>
+  <div class="music off" id="musicBtn">&#9834;</div>
+  <audio id="bgm" loop preload="auto"></audio>
 
   <div class="wrap">
 
     <!-- 1. 封面 -->
     <div class="cover" id="cover">
-      <img class="bgimg" src="./img/1.jpg" alt="">
-      <div class="tag">SAVE THE DATE</div>
-      <h1>陈振华 &amp; 钱玎玎</h1>
-      <div class="sub">有一份婚宴邀请函请您查收</div>
-      <div class="date">2026 . 12 . 20</div>
-      <div class="hint">↑ 向上滑动开启 ↓</div>
+      <img class="bgimg" id="coverBgImg" src="" alt="">
+      <div class="tag" id="coverTag">SAVE THE DATE</div>
+      <h1 id="coverNames"></h1>
+      <div class="sub" id="coverSub"></div>
+      <div class="date" id="coverDate"></div>
+      <div class="hint">&#8593; 向上滑动开启 &#8595;</div>
     </div>
 
     <!-- 2. 黑胶唱片 -->
     <section class="center reveal">
       <div class="vinyl-wrap">
-        <div class="vinyl"><img src="./img/2.jpg" alt=""></div>
+        <div class="vinyl"><img id="vinylImg" src="" alt=""></div>
         <div class="hand"></div>
       </div>
-      <div class="big-script script">Love Can</div>
+      <div class="big-script script" id="vinylScript"></div>
       <div class="divider"></div>
-      <div class="poem">
-        嗨，你准备好参加一场欢快的聚会了吗？
-      </div>
+      <div class="poem" id="vinylPoem"></div>
     </section>
 
     <div class="player reveal">
       <div class="t">
         <div>
-          <div class="name">SAVE THE DATE</div>
-          <div class="st" id="st">音乐播放中...</div>
+          <div class="name" id="playerName">SAVE THE DATE</div>
+          <div class="st" id="st">点击播放音乐</div>
         </div>
-        <img src="./img/3.jpg" alt="">
+        <img id="playerImg" src="" alt="">
       </div>
       <div class="bar"><i></i></div>
     </div>
@@ -785,49 +195,31 @@
     <!-- 3. 文案一 -->
     <section class="center reveal">
       <div class="en" style="color:var(--gray);font-size:13px;">WEDDING INVITATION</div>
-      <div style="margin-top:8px;color:var(--red);letter-spacing:2px;">陈振华 &amp; 钱玎玎</div>
+      <div style="margin-top:8px;color:var(--red);letter-spacing:2px;" id="invNames"></div>
       <div class="divider"></div>
-      <div class="poem">
-        关于你<br>
-        实在没办法用只言片语代替<br>
-        如果一定要说<br>
-        那纵使是世间最轻柔的风<br>
-        也敌不过你的话语<br>
-        温柔浪漫热情这是我对你的全部定义
-      </div>
+      <div class="poem" id="poemOne"></div>
     </section>
 
-    <div class="photo reveal"><img src="./img/4.jpg" alt=""></div>
+    <div class="photo reveal"><img id="photo1" src="" alt=""></div>
 
     <!-- 4. 文案二 + 邀请 -->
     <section class="center reveal">
-      <div class="big-script script" style="font-size:30px;">With You</div>
-      <div class="poem right">
-        你迟到的这些年<br>
-        让我差点就以为结婚不过如此<br>
-        可当你出现后<br>
-        我又原谅了这些年的漫长等待<br>
-        让我知道一切都值得
-      </div>
+      <div class="big-script script" id="withYouScript" style="font-size:30px;"></div>
+      <div class="poem right" id="poemTwo"></div>
       <div class="divider"></div>
       <div class="en script" style="color:var(--pink);font-size:26px;">Wedding Invitation</div>
-      <div class="poem" style="margin-top:22px;">
-        我们将邀请您<br>
-        用浓墨重彩的一天<br>
-        开启细水长流的余年<br>
-        时日如你与你共享
-      </div>
+      <div class="poem" style="margin-top:22px;" id="invitation"></div>
     </section>
 
     <div class="grid2 reveal">
-      <div><img src="./img/5.jpg" alt=""></div>
-      <img src="./img/6.jpg" alt="">
+      <div><img id="gridLeft" src="" alt=""></div>
+      <img id="gridRight" src="" alt="">
     </div>
 
     <!-- 5. 倒计时 -->
     <section class="center reveal">
-      <div class="poem">love and being loved happen at the same time.</div>
-      <div style="color:var(--gray);font-size:13px;margin-top:10px;">（此时此刻 爱与被爱同时发生了）</div>
+      <div class="poem" id="countLine"></div>
+      <div style="color:var(--gray);font-size:13px;margin-top:10px;" id="countNote"></div>
       <div class="count" id="count">
         <div class="c"><b id="d">00</b><span>DAY</span></div>
         <div class="c"><b id="h">00</b><span>HOUR</span></div>
@@ -836,248 +228,63 @@
       </div>
     </section>
 
-    <div class="photo reveal"><img src="./img/7.jpg" alt=""></div>
+    <div class="photo reveal"><img id="photo2" src="" alt=""></div>
 
-    <!-- 6. 日历 + 地图 -->
+    <!-- 6. 日历 -->
     <section class="reveal" style="padding-bottom: 10px;">
       <div class="cal">
         <div class="d">
-          <b>12</b> / 20
-          <span style="float:right;color:var(--gray);font-size:13px;">-2026-</span>
+          <b id="calMonth">12</b> / <span id="calDay">20</span>
+          <span style="float:right;color:var(--gray);font-size:13px;" id="calYear">-2026-</span>
         </div>
-
-        <table>
-          <tr>
-            <th>MON</th>
-            <th>TUE</th>
-            <th>WED</th>
-            <th>THU</th>
-            <th>FRI</th>
-            <th>SAT</th>
-            <th>SUN</th>
-          </tr>
-          <!-- 11月尾 -->
-          <tr>
-            <td class="dim">30</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-          </tr>
-          <!-- 12月 7-13 -->
-          <tr>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-          </tr>
-          <!-- 12月 14-20 -->
-          <tr>
-            <td>14</td>
-            <td>15</td>
-            <td>16</td>
-            <td>17</td>
-            <td>18</td>
-            <td>19</td>
-            <td class="mark"><span>20</span></td>
-          </tr>
-          <!-- 12月 21-27 -->
-          <tr>
-            <td>21</td>
-            <td>22</td>
-            <td>23</td>
-            <td>24</td>
-            <td>25</td>
-            <td>26</td>
-            <td>27</td>
-          </tr>
-          <!-- 12月 28-31 + 1月 -->
-          <tr>
-            <td>28</td>
-            <td>29</td>
-            <td>30</td>
-            <td>31</td>
-            <td class="dim">1</td>
-            <td class="dim">2</td>
-            <td class="dim">3</td>
-          </tr>
-        </table>
+        <table id="calTable"></table>
       </div>
-
       <div class="addr" style="margin-top: 15px;">
-        <b>农历十一月十二 中午12:00</b>
+        <b id="lunarText"></b>
       </div>
     </section>
 
     <!-- 7. 悄悄话 -->
     <section class="reveal">
-      <div style="font-size:19px;font-weight:700;letter-spacing:2px;">告诉你一些悄悄话</div>
-      <ul class="tips">
-        <li>如果你身在不同的城市，或因繁忙的工作无法到达仪式现场，没有关系，我们已经收到祝福了哦~</li>
-        <li>如果你有时间，请准备好你的好心情和好胃口，开开心心地来赴约吧~</li>
-        <li>我们提供了仪式前的茶歇，一些简单的点心和饮品，欢迎提前来玩~</li>
-        <li>出发前请提前规划好路线，婚宴当天我们可能会很忙碌，请照顾好自己噢~</li>
-      </ul>
-      <div class="call">
-        <a href="tel:18367123467">✆ 联系新郎</a>
-        <a href="tel:18307338088">✆ 联系新郎父亲</a>
-      </div>
+      <div style="font-size:19px;font-weight:700;letter-spacing:2px;" id="tipsTitle"></div>
+      <ul class="tips" id="tipsList"></ul>
+      <div class="call" id="callList"></div>
     </section>
 
-    <div class="photo reveal"><img src="./img/9.jpg" alt=""></div>
+    <div class="photo reveal"><img id="photo3" src="" alt=""></div>
 
     <!-- 8. 回执 -->
     <section class="center reveal">
-      <div class="poem">
-        一路走来，心中装满了感谢亲人的关爱与照顾<br>
-        朋友的见证与陪伴<br>
-        这一天感谢有你，陪我们启程
-      </div>
-      <div class="big-script script" style="margin-top:20px;">我们婚宴见~</div>
+      <div class="poem" id="thanksLines"></div>
+      <div class="big-script script" id="seeYou" style="margin-top:20px;"></div>
 
       <div class="form" id="form">
         <input type="text" id="name" placeholder="* 姓名" maxlength="20">
         <input type="tel" id="phone" placeholder="* 手机号" maxlength="11" inputmode="numeric">
-        <select id="count2">
-          <option value="" disabled selected>* 出席人数</option>
-          <option value="1">1 人</option>
-          <option value="2">2 人</option>
-          <option value="3">3 人</option>
-          <option value="4">4 人</option>
-          <option value="5">5 人</option>
-          <option value="6">6 人</option>
-          <option value="7">7 人</option>
-          <option value="8">8 人</option>
-        </select>
+        <select id="count2"></select>
         <button class="btn" id="submitBtn">提 交</button>
         <div class="ok" id="ok">提交成功，感谢你的回复！</div>
       </div>
     </section>
 
     <div class="wedding-card">
-      <!-- 1. 照片区 -->
-      <div class="photo-section">
-        <a href="https://uri.amap.com/marker?position=113.15878,27.703432&name=钰禧家宴（株洲市渌口区美的梧桐庄园）"
-          class="nav-btn">导航</a>
+      <div class="photo-section" id="cardPhotoSection">
+        <a id="navBtn" href="" target="_blank" class="nav-btn">导航</a>
       </div>
-
-      <!-- 2. 内容区 -->
       <div class="content-section">
-        <!-- 日期 -->
-        <div class="date-main">2026年12月20日 星期日</div>
-        <div class="date-sub">农历十一月十二 中午12:00</div>
-
-        <!-- 地点 (现在是优雅的可点击卡片) -->
+        <div class="date-main" id="dateMain"></div>
+        <div class="date-sub" id="dateSub"></div>
         <div class="venue-box">
-          <a href="https://uri.amap.com/marker?position=113.15878,27.703432&name=钰禧家宴（株洲市渌口区美的梧桐庄园）">
-            点击导航至：钰禧家宴<br>
-            （株洲市渌口区美的梧桐庄园）
-          </a>
+          <a id="venueLink" href="" target="_blank"></a>
         </div>
-
       </div>
     </div>
 
-    <div class="foot" >陈振华 &amp; 钱玎玎 · 2026.12.20</div>
+    <div class="foot" id="footer"></div>
   </div>
 
-  <script>
-    /* ===== 1. 背景音乐 ===== */
-    const bgm = document.getElementById('bgm');
-    const musicBtn = document.getElementById('musicBtn');
-    const st = document.getElementById('st');
-    let on = false;
-
-    function play() {
-      bgm.play().then(() => {
-        on = true; musicBtn.classList.remove('off'); st.textContent = '音乐播放中...';
-      }).catch(() => {
-        st.textContent = '点击图标播放音乐';
-      });
-    }
-    // 首次点击页面任意处自动播放
-    document.body.addEventListener('click', function once() {
-      play();
-      document.body.removeEventListener('click', once);
-    }, { once: true });
-
-    musicBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (on) { bgm.pause(); on = false; musicBtn.classList.add('off'); st.textContent = '音乐已暂停'; }
-      else { play(); }
-    });
-
-    /* ===== 2. 封面下滑提示 → 点击进入 ===== */
-    document.getElementById('cover').addEventListener('click', () => {
-      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
-      window.scrollTo({ top: window.innerHeight * 0.9, behavior: 'smooth' });
-    });
-
-    /* ===== 3. 滚动淡入 ===== */
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-    }, { threshold: .12 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-    /* ===== 4. 倒计时 ===== */
-    const target = new Date('2026-12-20T12:00:00+08:00').getTime();
-    function tick() {
-      let diff = target - Date.now();
-      if (diff < 0) diff = 0;
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor(diff % 86400000 / 3600000);
-      const m = Math.floor(diff % 3600000 / 60000);
-      const s = Math.floor(diff % 60000 / 1000);
-      document.getElementById('d').textContent = String(d).padStart(2, '0');
-      document.getElementById('h').textContent = String(h).padStart(2, '0');
-      document.getElementById('m').textContent = String(m).padStart(2, '0');
-      document.getElementById('s').textContent = String(s).padStart(2, '0');
-    }
-    tick();
-    setInterval(tick, 1000);
-
-    /* ===== 5. 出席回执 → Redis ===== */
-    document.getElementById('submitBtn').addEventListener('click', async () => {
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const count = parseInt(document.getElementById('count2').value);
-
-      if (!name) { alert('请填写姓名'); return; }
-      if (!/^1[3-9]\d{9}$/.test(phone)) { alert('请填写正确的11位手机号'); return; }
-      if (!count || count < 1) { alert('请选择出席人数'); return; }
-      if (count > 8) { alert('单次最多填写8人，如需更多请联系新人父亲'); return; }
-
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true; btn.textContent = '提交中...';
-
-      try {
-        const res = await fetch('/api/rsvp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, phone, count })
-        });
-        const data = await res.json();
-        if (data.success) {
-          document.getElementById('ok').style.display = 'block';
-          document.getElementById('name').value = '';
-          document.getElementById('phone').value = '';
-          document.getElementById('count2').value = '';
-          btn.textContent = '已提交 ✓';
-        } else {
-          alert('提交失败：' + (data.message || '未知错误'));
-          btn.disabled = false; btn.textContent = '提 交';
-        }
-      } catch (err) {
-        alert('网络错误，请稍后重试');
-        btn.disabled = false; btn.textContent = '提 交';
-      }
-    });
-  </script>
+  <script src="./wedding.json.js"></script>
+  <script src="./app.js"></script>
 </body>
 
 </html>
