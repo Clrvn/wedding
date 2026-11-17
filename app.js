@@ -96,14 +96,14 @@
 
   /* ---------- 渲染页面 ---------- */
   function render(d) {
-    if (d.share) {
-      var map = { 'og:title': d.share.ogTitle, 'og:description': d.share.ogDescription, 'og:image': d.share.ogImage };
-      Object.keys(map).forEach(function (k) {
-        var m = document.querySelector('meta[property="' + k + '"]');
-        if (m && map[k]) m.setAttribute('content', map[k]);
-      });
-      if (d.share.pageTitle) document.title = d.share.pageTitle;
-    }
+    // if (d.share) {
+    //   var map = { 'og:title': d.share.ogTitle, 'og:description': d.share.ogDescription, 'og:image': d.share.ogImage };
+    //   Object.keys(map).forEach(function (k) {
+    //     var m = document.querySelector('meta[property="' + k + '"]');
+    //     if (m && map[k]) m.setAttribute('content', map[k]);
+    //   });
+    //   if (d.share.pageTitle) document.title = d.share.pageTitle;
+    // }
 
     var couple = d.couple || {}, ev = d.event || {}, venue = d.venue || {},
         media = d.media || {}, copy = d.copy || {};
