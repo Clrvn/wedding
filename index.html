@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 🌟 微信卡片核心魔法代码，微信抓取的就是这三行 -->
+    <meta property="og:title" content="陈振华 & 钱玎玎的婚礼邀请函" />
+    <meta property="og:description" content="诚挚邀请您参加我们的回门宴，共享美好时刻！" />
+    <meta property="og:image" content="cover.jpg" />
+
+    <title>陈振华 & 钱玎玎的婚礼邀请函</title>
+    
+    <style>
+        /* 100% 适配手机端的样式，保证全屏铺满，不再留白 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: '微软雅黑', sans-serif;
+            background-color: #f9f4f6;
+        }
+        .container {
+            max-width: 600px; /* 限制最大宽度，在电脑上也不会太宽 */
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+        .cover-photo {
+            width: 100%;
+            height: 300px;
+            object-fit: cover; /* 保证图片铺满且不变形 */
+            border-radius: 10px;
+            margin-bottom: 30px;
+            background-color: #eee; /* 没加载出来时的占位色 */
+        }
+        h1 { color: #d5638e; font-size: 24px; margin-bottom: 15px; }
+        p { color: #555; font-size: 16px; line-height: 1.6; margin-bottom: 20px; }
+        .save-date {
+            padding: 15px;
+            background: #fdf2f5;
+            border-left: 4px solid #d5638e;
+            text-align: left;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 你的婚纱照封面 -->
+        <img src="cover.jpg" alt="婚礼封面" class="cover-photo">
+        
+        <h1>陈振华 & 钱玎玎</h1>
+        <p>
+            亲爱的朋友：<br>
+            诚挚邀请您参加我们的回门宴。<br>
+            愿在这美好的时刻，能与您共同分享我们的喜悦与幸福。
+        </p>
+        
+        <div class="save-date">
+            <p><strong>🕒 时间：</strong> 2026年12月20日 下午 17:00</p>
+            <p><strong>📍 地点：</strong> 株洲市渌口区钰禧家宴</p>
+        </div>
+    </div>
+</body>
+</html>
