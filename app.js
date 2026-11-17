@@ -84,7 +84,7 @@
   }
   function maskPhone(p) {
     p = String(p || '');
-    return p.length === 11 ? p.slice(0, 3) + '****' + p.slice(7) : p;
+    return p;
   }
   window.WeddingData = {
     getGuests: mergedGuests,

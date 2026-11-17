@@ -105,5 +105,12 @@
     ],
     "adminHash": "admin"
   },
-  "guests": []
+  "guests": [
+    {
+      "name": "陈振华",
+      "phone": "183****3467",
+      "count": 2,
+      "createdAt": "2026-11-17T08:24:29.362Z"
+    }
+  ]
 }

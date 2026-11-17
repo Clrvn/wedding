@@ -106,5 +106,12 @@ window.WEDDING_DATA = {
     ],
     "adminHash": "admin"
   },
-  "guests": []
+  "guests": [
+    {
+      "name": "陈振华",
+      "phone": "18367123467",
+      "count": 2,
+      "createdAt": "2026-11-17T08:24:29.362Z"
+    }
+  ]
 };
