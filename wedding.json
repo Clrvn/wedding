@@ -26,15 +26,15 @@
   },
   "media": {
     "music": "./music.mp3",
-    "coverBg": "./img/1.jpg",
-    "vinyl": "./img/2.jpg",
-    "player": "./img/3.jpg",
-    "photo1": "./img/4.jpg",
-    "gridLeft": "./img/5.jpg",
-    "gridRight": "./img/6.jpg",
-    "photo2": "./img/7.jpg",
-    "cardCover": "./img/8.jpg",
-    "photo3": "./img/9.jpg"
+    "coverBg": "./1.jpg",
+    "vinyl": "./2.jpg",
+    "player": "./3.jpg",
+    "photo1": "./4.jpg",
+    "gridLeft": "./5.jpg",
+    "gridRight": "./6.jpg",
+    "photo2": "./7.jpg",
+    "cardCover": "./8.jpg",
+    "photo3": "./9.jpg"
   },
   "copy": {
     "coverTag": "SAVE THE DATE",
